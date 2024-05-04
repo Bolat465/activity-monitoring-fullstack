@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include "includes/head.html" %}
+
+    <body id="body" class="dark-sidebar enlarge-menu">
+
+
+        {% include "includes/navbar.html" %}
+
+        {% include "includes/header.html" %}
+
+        <div class="page-wrapper">
+
+            <!-- Page Content-->
+            <div class="page-content-tab">
+
+                <div class="container-fluid">
+                    <!-- Page-Title -->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="page-title-box">
+                                
+                                <h4 class="page-title">Dashboard</h4>
+                            </div><!--end page-title-box-->
+                        </div><!--end col-->
+                    </div>
+                    <!-- end page title end breadcrumb -->
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card report-card">
+                                <div class="card-body">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col">
+                                            <p class="text-dark mb-1 fw-semibold">Projects</p>
+                                            <h4 class="font-22 fw-bold">{{pr_count}}</h4>
+                                            <p class="mb-0 text-truncate text-muted"><span class="text-success"><i class="mdi mdi-checkbox-marked-circle-outline me-1"></i></span>{{pr_compl}} Project Complete</p>
+                                        </div>
+                                        <div class="col-auto align-self-center">
+                                            <div class="bg-light-alt d-flex justify-content-center align-items-center thumb-md  rounded-circle">
+                                                <i data-feather="layers" class="align-self-center text-muted icon-sm"></i>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!--end card-body--> 
+                            </div><!--end card--> 
+                         
+                        </div> <!--end col--> 
+                    
+                                    
+                    </div><!--end row-->
+                    {% if user.groups.all.0.name == "Translator" %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="project-task-content">
+                                
+                               
+                                <div class="project-task-content-col">
+                                    <div class="project-task-content-inner">                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="text-uppercase font-15 font-weight-semibold mb-1">Created</h5>
+                                               
+                                            </div><!--End Col-->
+                                            <div class="col-auto">
+                                                <div class="project-task-add-btn mt-2 me-2">
+                                                    
+                                                </div>
+                                            </div><!--End Col-->
+                                        </div><!--End Row-->
+                                        <div class="progress mt-2 me-1 border-radius-tl-bl bg-pink" style="height: 2px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="project-task-box" data-simplebar="">
+                                            {% for i in projects %}
+                                            {% if not i.is_active and not i.complete  %}
+                                            
+                                            <div class="project-task-card mb-3">
+                                                
+
+                                                <div class="card-body">
+                                                    
+                                                    <i class="mdi mdi-circle-outline mt-n2 font-14 text-warning"></i>
+                                                    <span class="badge badge-soft-primary mb-2">{{i.number}}</span>
+                                                    <a href="/project/{{i.id}}"><h5 class="my-1 font-15">{{i.name}}</h5></a>                                                 
+                                                    <p class="mb-2 text-muted fw-semibold font-13 text-break">{{i.description}}</p>
+                                                    <hr class="hr-dashed">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-6 align-self-center">
+                                                           {{i.start_date}}
+                                                        </div><!--end col-->
+                                                        <div class="col-6 align-self-center">
+                                                            {{i.end_date}}
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                </div><!--end card-body-->
+                                                
+                                            </div><!--End project-task-card--> 
+                                        </a>
+                                            {%endif%}
+                                            {%endfor%}         
+                                        </div><!--End project-task-box-->                                                
+                                    </div><!--End project-task-content-inner-->
+                                </div><!--End project-task-content-Col-->
+                               
+                                <div class="project-task-content-col">
+                                    <div class="project-task-content-inner">                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="text-uppercase font-15 font-weight-semibold mb-1">Active</h5>
+                                                
+                                            </div><!--End Col-->
+                                            <div class="col-auto">
+                                                <div class="project-task-add-btn mt-2 me-2">
+                                                    
+                                                </div>
+                                            </div><!--End Col-->
+                                        </div><!--End Row-->
+                                        <div class="progress me-1 mt-2 bg-warning" style="height: 2px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="project-task-box" data-simplebar="">
+                                            {% for i in projects %}
+                                            {% if i.is_active and not i.complete %}
+                                            <a href="/project/{{i.id}}">
+                                                <div class="card-body">
+                                                    <div class="dropdown d-inline-block float-end">
+                                                        <a class="dropdown-toggle mr-n2 mt-n2" id="drop2" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                                        </a>
+                                                        
+                                                    </div><!--end dropdown-->
+                                                    <i class="mdi mdi-circle-outline mt-n2 font-14 text-warning"></i>
+                                                    <span class="badge badge-soft-primary mb-2">{{i.number}}</span>
+                                                    <h5 class="my-1 font-15">{{i.name}}</h5>                                                    
+                                                    <p class="mb-2 text-muted fw-semibold font-13 text-break">{{i.description}}</p>
+                                                    <hr class="hr-dashed">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-6 align-self-center">
+                                                           {{i.start_date}}
+                                                        </div><!--end col-->
+                                                        <div class="col-6 align-self-center">
+                                                            {{i.end_date}}
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                </div><!--end card-body-->
+                                                </a>
+                                            {%endif%}       
+                                            {%endfor%}
+                                        </div><!--End project-task-box-->                                                
+                                    </div><!--End project-task-content-inner-->
+                                </div><!--End project-task-content-Col-->
+                                
+                                <div class="project-task-content-col">
+                                    <div class="project-task-content-inner">
+                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="text-uppercase font-15 font-weight-semibold mb-1">Completed</h5>
+                                               
+                                            </div><!--End Col-->
+                                            <div class="col-auto">
+                                                <div class="project-task-add-btn mt-2 me-2">
+                                                  
+                                                </div>
+                                            </div><!--End Col-->
+                                        </div><!--End Row-->
+                                        <div class="progress me-1 mt-2 bg-success" style="height: 2px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="project-task-box" data-simplebar="">
+                                            {% for i in projects %}
+                                            {% if i.complete %}
+                                            <div class="project-task-card mb-3">
+                                                <div class="card-body">
+                                                    <div class="dropdown d-inline-block float-end">
+                                                        <a class="dropdown-toggle mr-n2 mt-n2" id="drop2" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                                        </a>
+                                                        
+                                                    </div><!--end dropdown-->
+                                                    <i class="mdi mdi-circle-outline mt-n2 font-14 text-warning"></i>
+                                                    <span class="badge badge-soft-primary mb-2">{{i.number}}</span>
+                                                    <h5 class="my-1 font-15">{{i.name}}</h5>                                                    
+                                                    <p class="mb-2 text-muted fw-semibold font-13 text-break">{{i.description}}</p>
+                                                    <hr class="hr-dashed">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-6 align-self-center">
+                                                           {{i.start_date}}
+                                                        </div><!--end col-->
+                                                        <div class="col-6 align-self-center">
+                                                            {{i.end_date}}
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                </div><!--end card-body-->
+                                            </div><!--End project-task-card--> 
+                                            {%endif%}       
+                                            {%endfor%}                       
+                                        </div><!--End project-task-box-->                                                
+                                    </div><!--End project-task-content-inner-->
+                                </div><!--End project-task-content-Col-->
+                                
+                              
+                            </div><!--End project-task-content-->
+                        </div><!--End Col-->
+                    </div><!--end row-->                   
+                    
+                    {% elif user.groups.all.0.name == "Chief Editor" %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="project-task-content">
+                                
+                               
+                                <div class="project-task-content-col">
+                                    <div class="project-task-content-inner">                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="text-uppercase font-15 font-weight-semibold mb-1">Unchecked</h5>
+                                               
+                                            </div><!--End Col-->
+                                            <div class="col-auto">
+                                                <div class="project-task-add-btn mt-2 me-2">
+                                                    
+                                                </div>
+                                            </div><!--End Col-->
+                                        </div><!--End Row-->
+                                        <div class="progress mt-2 me-1 border-radius-tl-bl bg-pink" style="height: 2px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="project-task-box" data-simplebar="">
+                                            {% for i in projects %}
+                                            {% if  i.activities.all.0.show_editing and not i.complete  %}
+                                            
+                                            <div class="project-task-card mb-3">
+                                                
+
+                                                <div class="card-body">
+                                                    
+                                                    <i class="mdi mdi-circle-outline mt-n2 font-14 text-warning"></i>
+                                                    <span class="badge badge-soft-primary mb-2">{{i.number}}</span>
+                                                    <a href="/project/{{i.id}}"><h5 class="my-1 font-15">{{i.name}}</h5></a>                                                 
+                                                    <p class="mb-2 text-muted fw-semibold font-13 text-break">{{i.description}}</p>
+                                                    <hr class="hr-dashed">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-6 align-self-center">
+                                                           {{i.start_date}}
+                                                        </div><!--end col-->
+                                                        <div class="col-6 align-self-center">
+                                                            {{i.end_date}}
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                </div><!--end card-body-->
+                                                
+                                            </div><!--End project-task-card--> 
+                                     
+                                            {%endif%}
+                                            {%endfor%}         
+                                        </div><!--End project-task-box-->                                                
+                                    </div><!--End project-task-content-inner-->
+                                </div><!--End project-task-content-Col-->
+                               
+                                <div class="project-task-content-col">
+                                    <div class="project-task-content-inner">                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="text-uppercase font-15 font-weight-semibold mb-1">Checked</h5>
+                                                
+                                            </div><!--End Col-->
+                                            <div class="col-auto">
+                                                <div class="project-task-add-btn mt-2 me-2">
+                                                    
+                                                </div>
+                                            </div><!--End Col-->
+                                        </div><!--End Row-->
+                                        <div class="progress me-1 mt-2 bg-warning" style="height: 2px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="project-task-box" data-simplebar="">
+                                            {% for i in projects %}
+                                            {% if not i.activities.all.0.show_editing and not i.complete%}
+                                       
+                                            <div class="project-task-card mb-3">
+                                                
+
+                                                <div class="card-body">
+                                                    
+                                                    <i class="mdi mdi-circle-outline mt-n2 font-14 text-warning"></i>
+                                                    <span class="badge badge-soft-primary mb-2">{{i.number}}</span>
+                                                    <a href="/project/{{i.id}}"><h5 class="my-1 font-15">{{i.name}}</h5></a>                                                 
+                                                    <p class="mb-2 text-muted fw-semibold font-13 text-break">{{i.description}}</p>
+                                                    <hr class="hr-dashed">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-6 align-self-center">
+                                                           {{i.start_date}}
+                                                        </div><!--end col-->
+                                                        <div class="col-6 align-self-center">
+                                                            {{i.end_date}}
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                </div><!--end card-body-->
+                                                
+                                            </div><!--End project-task-card--> 
+                                            {%endif%}       
+                                            {%endfor%}
+                                        </div><!--End project-task-box-->                                                
+                                    </div><!--End project-task-content-inner-->
+                                </div><!--End project-task-content-Col-->
+                                
+                                <div class="project-task-content-col">
+                                    <div class="project-task-content-inner">
+                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="text-uppercase font-15 font-weight-semibold mb-1">Completed</h5>
+                                               
+                                            </div><!--End Col-->
+                                            <div class="col-auto">
+                                                <div class="project-task-add-btn mt-2 me-2">
+                                                  
+                                                </div>
+                                            </div><!--End Col-->
+                                        </div><!--End Row-->
+                                        <div class="progress me-1 mt-2 bg-success" style="height: 2px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="project-task-box" data-simplebar="">
+                                            {% for i in projects %}
+                                            {% if i.complete %}
+                                            <div class="project-task-card mb-3">
+                                                
+
+                                                <div class="card-body">
+                                                    
+                                                    <i class="mdi mdi-circle-outline mt-n2 font-14 text-warning"></i>
+                                                    <span class="badge badge-soft-primary mb-2">{{i.number}}</span>
+                                                    <a href="/project/{{i.id}}"><h5 class="my-1 font-15">{{i.name}}</h5></a>                                                 
+                                                    <p class="mb-2 text-muted fw-semibold font-13 text-break">{{i.description}}</p>
+                                                    <hr class="hr-dashed">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-6 align-self-center">
+                                                           {{i.start_date}}
+                                                        </div><!--end col-->
+                                                        <div class="col-6 align-self-center">
+                                                            {{i.end_date}}
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                </div><!--end card-body-->
+                                                
+                                            </div><!--End project-task-card--> 
+                                            {%endif%}       
+                                            {%endfor%}                       
+                                        </div><!--End project-task-box-->                                                
+                                    </div><!--End project-task-content-inner-->
+                                </div><!--End project-task-content-Col-->
+                                
+                              
+                            </div><!--End project-task-content-->
+                        </div><!--End Col-->
+                    </div><!--end row--> 
+                    {%elif user.groups.all.0.name == "Manager" %}        
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="project-task-content">
+                                
+                               
+                                <div class="project-task-content-col">
+                                    <div class="project-task-content-inner">                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="text-uppercase font-15 font-weight-semibold mb-1">Created</h5>
+                                               
+                                            </div><!--End Col-->
+                                            <div class="col-auto">
+                                                <div class="project-task-add-btn mt-2 me-2">
+                                                    
+                                                </div>
+                                            </div><!--End Col-->
+                                        </div><!--End Row-->
+                                        <div class="progress mt-2 me-1 border-radius-tl-bl bg-pink" style="height: 2px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="project-task-box" data-simplebar="">
+                                            {% for i in projects %}
+                                            {% if not i.is_active and not i.complete  %}
+                                            
+                                            <div class="project-task-card mb-3">
+                                                
+
+                                                <div class="card-body">
+                                                    
+                                                    <i class="mdi mdi-circle-outline mt-n2 font-14 text-warning"></i>
+                                                    <span class="badge badge-soft-primary mb-2">{{i.number}}</span>
+                                                    <a href="/project/{{i.id}}"><h5 class="my-1 font-15">{{i.name}}</h5></a>                                                 
+                                                    <p class="mb-2 text-muted fw-semibold font-13 text-break">{{i.description}}</p>
+                                                    <hr class="hr-dashed">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-6 align-self-center">
+                                                           {{i.start_date}}
+                                                        </div><!--end col-->
+                                                        <div class="col-6 align-self-center">
+                                                            {{i.end_date}}
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                </div><!--end card-body-->
+                                                
+                                            </div><!--End project-task-card--> 
+                                        </a>
+                                            {%endif%}
+                                            {%endfor%}         
+                                        </div><!--End project-task-box-->                                                
+                                    </div><!--End project-task-content-inner-->
+                                </div><!--End project-task-content-Col-->
+                               
+                                <div class="project-task-content-col">
+                                    <div class="project-task-content-inner">                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="text-uppercase font-15 font-weight-semibold mb-1">Active</h5>
+                                                
+                                            </div><!--End Col-->
+                                            <div class="col-auto">
+                                                <div class="project-task-add-btn mt-2 me-2">
+                                                    
+                                                </div>
+                                            </div><!--End Col-->
+                                        </div><!--End Row-->
+                                        <div class="progress me-1 mt-2 bg-warning" style="height: 2px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="project-task-box" data-simplebar="">
+                                            {% for i in projects %}
+                                            {% if i.is_active and not i.complete %}
+                                            <a href="/project/{{i.id}}">
+                                                <div class="card-body">
+                                                    <div class="dropdown d-inline-block float-end">
+                                                        <a class="dropdown-toggle mr-n2 mt-n2" id="drop2" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                                        </a>
+                                                        
+                                                    </div><!--end dropdown-->
+                                                    <i class="mdi mdi-circle-outline mt-n2 font-14 text-warning"></i>
+                                                    <span class="badge badge-soft-primary mb-2">{{i.number}}</span>
+                                                    <h5 class="my-1 font-15">{{i.name}}</h5>                                                    
+                                                    <p class="mb-2 text-muted fw-semibold font-13 text-break">{{i.description}}</p>
+                                                    <hr class="hr-dashed">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-6 align-self-center">
+                                                           {{i.start_date}}
+                                                        </div><!--end col-->
+                                                        <div class="col-6 align-self-center">
+                                                            {{i.end_date}}
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                </div><!--end card-body-->
+                                                </a>
+                                            {%endif%}       
+                                            {%endfor%}
+                                        </div><!--End project-task-box-->                                                
+                                    </div><!--End project-task-content-inner-->
+                                </div><!--End project-task-content-Col-->
+                                
+                                <div class="project-task-content-col">
+                                    <div class="project-task-content-inner">
+                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="text-uppercase font-15 font-weight-semibold mb-1">Completed</h5>
+                                               
+                                            </div><!--End Col-->
+                                            <div class="col-auto">
+                                                <div class="project-task-add-btn mt-2 me-2">
+                                                  
+                                                </div>
+                                            </div><!--End Col-->
+                                        </div><!--End Row-->
+                                        <div class="progress me-1 mt-2 bg-success" style="height: 2px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="project-task-box" data-simplebar="">
+                                            {% for i in projects %}
+                                            {% if i.complete %}
+                                            <div class="project-task-card mb-3">
+                                                <div class="card-body">
+                                                    <div class="dropdown d-inline-block float-end">
+                                                        <a class="dropdown-toggle mr-n2 mt-n2" id="drop2" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                                        </a>
+                                                        
+                                                    </div><!--end dropdown-->
+                                                    <i class="mdi mdi-circle-outline mt-n2 font-14 text-warning"></i>
+                                                    <span class="badge badge-soft-primary mb-2">{{i.number}}</span>
+                                                    <h5 class="my-1 font-15">{{i.name}}</h5>                                                    
+                                                    <p class="mb-2 text-muted fw-semibold font-13 text-break">{{i.description}}</p>
+                                                    <hr class="hr-dashed">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-6 align-self-center">
+                                                           {{i.start_date}}
+                                                        </div><!--end col-->
+                                                        <div class="col-6 align-self-center">
+                                                            {{i.end_date}}
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                </div><!--end card-body-->
+                                            </div><!--End project-task-card--> 
+                                            {%endif%}       
+                                            {%endfor%}                       
+                                        </div><!--End project-task-box-->                                                
+                                    </div><!--End project-task-content-inner-->
+                                </div><!--End project-task-content-Col-->
+                                
+                              
+                            </div><!--End project-task-content-->
+                        </div><!--End Col-->
+                    </div><!--end row-->     
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="project-task-content">
+                                
+                               
+                                <div class="project-task-content-col">
+                                    <div class="project-task-content-inner">                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="text-uppercase font-15 font-weight-semibold mb-1">Unchecked</h5>
+                                               
+                                            </div><!--End Col-->
+                                            <div class="col-auto">
+                                                <div class="project-task-add-btn mt-2 me-2">
+                                                    
+                                                </div>
+                                            </div><!--End Col-->
+                                        </div><!--End Row-->
+                                        <div class="progress mt-2 me-1 border-radius-tl-bl bg-pink" style="height: 2px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="project-task-box" data-simplebar="">
+                                            {% for i in projects %}
+                                            {% if  i.activities.all.0.show_editing and not i.complete  %}
+                                            
+                                            <div class="project-task-card mb-3">
+                                                
+
+                                                <div class="card-body">
+                                                    
+                                                    <i class="mdi mdi-circle-outline mt-n2 font-14 text-warning"></i>
+                                                    <span class="badge badge-soft-primary mb-2">{{i.number}}</span>
+                                                    <a href="/project/{{i.id}}"><h5 class="my-1 font-15">{{i.name}}</h5></a>                                                 
+                                                    <p class="mb-2 text-muted fw-semibold font-13 text-break">{{i.description}}</p>
+                                                    <hr class="hr-dashed">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-6 align-self-center">
+                                                           {{i.start_date}}
+                                                        </div><!--end col-->
+                                                        <div class="col-6 align-self-center">
+                                                            {{i.end_date}}
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                </div><!--end card-body-->
+                                                
+                                            </div><!--End project-task-card--> 
+                                     
+                                            {%endif%}
+                                            {%endfor%}         
+                                        </div><!--End project-task-box-->                                                
+                                    </div><!--End project-task-content-inner-->
+                                </div><!--End project-task-content-Col-->
+                               
+                                <div class="project-task-content-col">
+                                    <div class="project-task-content-inner">                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="text-uppercase font-15 font-weight-semibold mb-1">Checked</h5>
+                                                
+                                            </div><!--End Col-->
+                                            <div class="col-auto">
+                                                <div class="project-task-add-btn mt-2 me-2">
+                                                    
+                                                </div>
+                                            </div><!--End Col-->
+                                        </div><!--End Row-->
+                                        <div class="progress me-1 mt-2 bg-warning" style="height: 2px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="project-task-box" data-simplebar="">
+                                            {% for i in projects %}
+                                            {% if not i.activities.all.0.show_editing and not i.complete%}
+                                       
+                                            <div class="project-task-card mb-3">
+                                                
+
+                                                <div class="card-body">
+                                                    
+                                                    <i class="mdi mdi-circle-outline mt-n2 font-14 text-warning"></i>
+                                                    <span class="badge badge-soft-primary mb-2">{{i.number}}</span>
+                                                    <a href="/project/{{i.id}}"><h5 class="my-1 font-15">{{i.name}}</h5></a>                                                 
+                                                    <p class="mb-2 text-muted fw-semibold font-13 text-break">{{i.description}}</p>
+                                                    <hr class="hr-dashed">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-6 align-self-center">
+                                                           {{i.start_date}}
+                                                        </div><!--end col-->
+                                                        <div class="col-6 align-self-center">
+                                                            {{i.end_date}}
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                </div><!--end card-body-->
+                                                
+                                            </div><!--End project-task-card--> 
+                                            {%endif%}       
+                                            {%endfor%}
+                                        </div><!--End project-task-box-->                                                
+                                    </div><!--End project-task-content-inner-->
+                                </div><!--End project-task-content-Col-->
+                                
+                                <div class="project-task-content-col">
+                                    <div class="project-task-content-inner">
+                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="text-uppercase font-15 font-weight-semibold mb-1">Completed</h5>
+                                               
+                                            </div><!--End Col-->
+                                            <div class="col-auto">
+                                                <div class="project-task-add-btn mt-2 me-2">
+                                                  
+                                                </div>
+                                            </div><!--End Col-->
+                                        </div><!--End Row-->
+                                        <div class="progress me-1 mt-2 bg-success" style="height: 2px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="project-task-box" data-simplebar="">
+                                            {% for i in projects %}
+                                            {% if i.complete %}
+                                            <div class="project-task-card mb-3">
+                                                
+
+                                                <div class="card-body">
+                                                    
+                                                    <i class="mdi mdi-circle-outline mt-n2 font-14 text-warning"></i>
+                                                    <span class="badge badge-soft-primary mb-2">{{i.number}}</span>
+                                                    <a href="/project/{{i.id}}"><h5 class="my-1 font-15">{{i.name}}</h5></a>                                                 
+                                                    <p class="mb-2 text-muted fw-semibold font-13 text-break">{{i.description}}</p>
+                                                    <hr class="hr-dashed">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-6 align-self-center">
+                                                           {{i.start_date}}
+                                                        </div><!--end col-->
+                                                        <div class="col-6 align-self-center">
+                                                            {{i.end_date}}
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                </div><!--end card-body-->
+                                                
+                                            </div><!--End project-task-card--> 
+                                            {%endif%}       
+                                            {%endfor%}                       
+                                        </div><!--End project-task-box-->                                                
+                                    </div><!--End project-task-content-inner-->
+                                </div><!--End project-task-content-Col-->
+                                
+                              
+                            </div><!--End project-task-content-->
+                        </div><!--End Col-->
+                    </div><!--end row-->     
+                    {%endif%}
+
+                </div><!-- container -->
+
+                <!--Start Rightbar-->
+                <!--Start Rightbar/offcanvas-->
+               
+                <!--end Rightbar/offcanvas-->
+                 <!--end Rightbar-->
+                 
+                <!--Start Footer-->
+                <!-- Footer Start -->
+               
+                <!-- end Footer -->                
+                <!--end footer-->
+            </div>
+            <!-- end page content -->
+        </div>
+        <!-- end page-wrapper -->
+
+        <!-- Javascript  -->   
+        <script src="/static/assets/plugins/chartjs/chart.js"></script>
+        <script src="/static/assets/plugins/lightpicker/litepicker.js"></script>
+        <script src="/static/assets/plugins/apexcharts/apexcharts.min.js"></script>       
+        <script src="/static/assets/pages/projects-index.init.js"></script>
+        <!-- App js -->
+        <script src="/static/assets/js/app.js"></script>
+
+    </body>
+    <!--end body-->
+</html>

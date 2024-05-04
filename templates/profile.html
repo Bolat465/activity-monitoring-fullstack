@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    {% include "includes/head.html" %}
+
+    <body id="body" class="dark-sidebar enlarge-menu">
+        {% include "includes/navbar.html" %}
+        
+        {% include "includes/header.html" %}
+
+    <div class="page-wrapper">
+
+        <!-- Page Content-->
+        <div class="page-content-tab">
+
+            <div class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="float-end">
+                                
+                            </div>
+                            <h4 class="page-title">Profile</h4>
+                        </div>
+                        <!--end page-title-box-->
+                    </div>
+                    <!--end col-->
+                </div>
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="met-profile">
+                                    <div class="row">
+                                        <div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+                                            <div class="met-profile-main">
+                                                <div class="met-profile-main-pic">
+                                                    <img src="{%if user.profile_picture%} {{user.profile_picture}}{%else%}https://techcentereurope.com/panel/assets/upload/default/default-profile.jpg {% endif %}" alt="" height="110" class="rounded-circle">
+                                                    <span class="met-profile_main-pic-change">
+                                                        <i class="fas fa-camera"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="met-profile_user-detail">
+                                                    <h5 class="met-user-name">{{user.first_name}} {{user.last_name}}</h5>                                                        
+                                                    <p class="mb-0 met-user-name-post">{{user.groups.all.0.name}}</p>                                                        
+                                                </div>
+                                            </div>                                                
+                                        </div><!--end col-->
+                                        
+                                        <div class="col-lg-4 ms-auto align-self-center">
+                                            <ul class="list-unstyled personal-detail mb-0">
+                                                <li class=""><i class="las la-phone mr-2 text-secondary font-22 align-middle"></i> <b> phone </b> : {{user.phone}}</li>
+                                                <li class="mt-2"><i class="las la-envelope text-secondary font-22 align-middle mr-2"></i> <b> Email </b> : {{user.email}}</li>
+                                                                                               
+                                            </ul>
+                                           
+                                        </div><!--end col-->
+                                        <div class="col-lg-4 align-self-center">
+                                            <div class="row">
+                                               
+                                            </div><!--end row-->                                               
+                                        </div><!--end col-->
+                                    </div><!--end row-->
+                                </div><!--end f_profile-->                                                                                
+                            </div><!--end card-body-->  
+                            <div class="card-body p-0">    
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                                                        
+                                   
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                                                                   
+                                    <div class="tab-pane p-3 active" id="Settings" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-xl-6">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="row align-items-center">
+                                                            <div class="col">                      
+                                                                <h4 class="card-title">Personal Information</h4>                      
+                                                            </div><!--end col-->                                                       
+                                                        </div>  <!--end row-->                                  
+                                                    </div><!--end card-header-->
+                                                    <div class="card-body">                       
+                                                        <div class="form-group mb-3 row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center form-label">First Name</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <input class="form-control" type="text" value="{{user.first_name}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group mb-3 row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center form-label">Last Name</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <input class="form-control" type="text" value="{{user.last_name}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group mb-3 row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center form-label">Workplace:</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <input class="form-control" type="text" value="{{user.workplace}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group mb-3 row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center form-label">Date of birth:</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <input class="form-control" type="text" value="{{user.date_birth}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group mb-3 row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center form-label">Family status:</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <input class="form-control" type="text" value="{{user.family_status}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group mb-3 row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center form-label">Contact Phone</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text"><i class="las la-phone"></i></span>
+                                                                    <input type="text" class="form-control" value="{{user.phone}}" placeholder="Phone" aria-describedby="basic-addon1">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group mb-3 row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center form-label">Email Address</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text"><i class="las la-at"></i></span>
+                                                                    <input type="text" class="form-control" value="{{user.email}}" placeholder="Email" aria-describedby="basic-addon1">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="form-group mb-3 row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center form-label">City</label>
+                                                            
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <input class="form-control" type="text" value="{{user.city}}">
+                                                            </div>
+                                                        </div>
+                                                                                                       
+                                                    </div>                                            
+                                                </div>
+                                            </div> <!--end col--> 
+                                                                                                                      
+                                        </div><!--end row-->
+                                    </div>
+                                </div>        
+                            </div> <!--end card-body-->                            
+                        </div><!--end card-->
+                    </div><!--end col-->
+                </div><!--end row-->
+
+            </div><!-- container -->
+
+          
+                
+        </div>
+        <!-- end page content -->
+    </div>
+    <!-- end page-wrapper -->
+
+    <!-- Javascript  -->
+    <script src="/static/assets/plugins/tobii/tobii.min.js"></script>
+    <!-- App js -->
+    <script src="/static/assets/js/app.js"></script>
+    <script>
+        const tobii = new Tobii()
+    </script>
+
+</body>
+
+</html>

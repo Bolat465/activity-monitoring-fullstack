@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include "includes/head.html" %}
+
+<body id="body" class="dark-sidebar enlarge-menu">
+    {% include "includes/navbar.html" %}
+
+    {% include "includes/header.html" %}
+
+    <div class="page-wrapper">
+
+        <!-- Page Content-->
+        <div class="page-content-tab">
+
+            <div class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="float-end">
+                                
+                            </div>
+                            <h4 class="page-title">Project: {{ project.name }}</h4>
+                        </div>
+                        <!--end page-title-box-->
+                    </div>
+                    <!--end col-->
+                </div>
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">{{project.start_date}} - -> {{project.end_date}}</h4></br>
+                                <span class="text-muted mb-0">{{ original_doc_content }}
+                                </span>  
+                            </div><!--end card-header-->
+                            <div class="card-body">                                                  
+                                <form method="post">
+                                    <textarea id="basic-conf">{{ translated_doc_content }}</textarea>
+                                </form>        
+                            </div><!--end card-body-->
+                        </div><!--end card-->
+                    </div> <!-- end col -->
+                </div> <!-- end row --> 
+
+            </div><!-- container -->
+            <form action="{%url 'update_activity'  activity.id %}" method="post">
+            <div class = "col-12 ">
+                {%csrf_token%}
+                <div class = "row">
+                    <div class = "col-4">
+                        <div class="mb-3 row">
+                            <label for="example-number-input" class="col-4 col-form-label text-end">Hours spent</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="number" id="example-number-input" name="hours_spent" value="{{ activity.hours_spent }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "col-4">
+                        <div class="mb-3 row">
+                            <label for="example-number-input" class="col-4 col-form-label text-end">Hours remaining</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="number" name="hours_remaining" value="{{ activity.hours_remaining }}" id="example-number-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class = "row">
+                    <div class = "col-4">
+                        <div class="mb-3 row">
+                            <label for="example-number-input" class="col-4 col-form-label text-end">Text produced</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="number" name="text_produced" value="{{ activity.text_produced }}" id="example-number-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "col-4">
+                        <div class="mb-3 row">
+                            <label for="example-number-input" class="col-4 col-form-label text-end">Text remaining</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="number" name="text_remaining" value="{{ activity.text_remaining }}" id="example-number-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                   
+            </div>
+            
+           
+           <!--Start Footer-->
+           <!-- Footer Start -->
+           <footer class="footer text-center text-sm-start">
+            <button onclick="saveTranslatedDocument()" class="btn btn-primary">Save Translated Document</button>
+            <button type="submit" class="btn btn-primary"> Submit</button>
+            </form>
+
+            {% if not user.groups.all.0.name == "Translator" %}
+            <form action="{% url 'check_activity' activity.id%}" method="post" style="position:absolute; top:10px; right:20px">
+                {%csrf_token%}
+            <button type="submit" class="btn btn-primary"> Checked</button>
+            </form>
+            {%endif %}
+           </footer>
+           
+           <!-- end Footer -->                
+           <!--end footer-->
+        </div>
+
+        <!-- end page content -->
+        
+    </div>
+    <!-- end page-wrapper -->
+  
+       
+
+   <!-- Javascript  -->
+
+    <script>
+        function saveTranslatedDocument() {
+            
+            var editor = tinymce.get('basic-conf');
+
+            var translatedContent = editor.getContent();
+            // Отправляем переведенное содержимое на сервер для сохранения
+            fetch('/project/save_translated_document/{{ project.id }}/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: 'translated_content=' + encodeURIComponent(translatedContent)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+
+ 
+    <script src="/static/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="/static/assets/pages/form-editor.init.js"></script>
+    <!-- App js -->
+    <script src="/static/assets/js/app.js"></script>
+
+</body>
+
+</html>

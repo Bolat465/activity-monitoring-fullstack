@@ -1,0 +1,116 @@
+   <!-- leftbar-menu -->
+   <div class="left-sidebar">
+    <!-- LOGO -->
+    <div class="brand">
+        <a href="/" class="logo">
+            <span>
+
+                <img src="/static/assets/images/favicon.ico" alt="logo-small" class="logo-sm">
+                <span style="font-size:20px; color:white;">EasyLang</span>
+            </span>
+            <span>
+                
+                <img src="/static/assets/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark">
+            </span>
+        </a>
+    </div>
+    <div class="sidebar-user-pro media border-end">                    
+        <div class="position-relative mx-auto">
+            <img src="{%if user.profile_picture%} {{user.profile_picture}}{%else%}https://techcentereurope.com/panel/assets/upload/default/default-profile.jpg {% endif %}" alt="user" class="rounded-circle thumb-md">
+            <span class="online-icon position-absolute end-0"><i class="mdi mdi-record text-success"></i></span>
+        </div>
+        <div class="media-body ms-2 user-detail align-self-center">
+            <h5 class="font-14 m-0 fw-bold">{{user.username}}</h5>  
+            <span class="opacity-50 mb-0">{{user.email}}</span>          
+        </div>                    
+    </div>
+    
+
+
+    <!--end logo-->
+    <div class="menu-content h-100" data-simplebar>
+        <div class="menu-body navbar-vertical">
+            <div class="collapse navbar-collapse tab-content" id="sidebarCollapse">
+                <!-- Navigation -->
+                <ul class="navbar-nav active" id="Main" >
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/" >
+                            <i class="ti ti-stack menu-icon"></i>
+                            <span>Dashboard</span>
+                        </a> 
+                       
+                    </li><!--end nav-item-->
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/profile" >
+                            <i class="ti ti-stack menu-icon"></i>
+                            <span>Profile</span>
+                        </a> 
+                        
+                    </li><!--end nav-item-->
+
+   
+
+                </ul>
+            </div><!--end sidebarCollapse-->
+        </div>
+    </div>    
+</div>
+<!-- end left-sidenav-->
+<!-- end leftbar-menu-->
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function fetchNotifications() {
+            fetch('/notifications/', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',  // Замените YOUR_ACCESS_TOKEN на фактический токен доступа
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.length > 0) {
+                    data.forEach(notification => {
+                        Swal.fire({
+                            title: notification.title,
+                            text: notification.message,  // Предполагается, что уведомление содержит поле 'message'
+                            icon: 'info',
+                            timer: 15000,
+                            showConfirmButton: false,
+                            toast: true,
+                            position: 'top-end'
+                            
+                        });
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Unable to fetch notifications: ' + error.message,
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+            });
+        }
+        
+        fetchNotifications();
+        setInterval(fetchNotifications, 15000);  // Периодический запрос каждые 5 секунд
+    });
+    
+    </script>
+
+    <script src="/static/assets/pages/sweet-alert.init.js" aria-hidden="true"></script>
+    <script src="/static/assets/plugins/sweet-alert2/sweetalert2.min.js" aria-hidden="true"></script>
